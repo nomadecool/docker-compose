@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Convertir Comando Docker a Docker Compose</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .blurb {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f5f5f5;
+        }
+
+        .input-container p {
+            margin-bottom: 10px;
+        }
+
+        .input-field {
+            width: 97%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .submit-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .result-container {
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f5f5f5;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .result-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .result-frame {
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f5f5f5;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1 id="headerText">Convertir Comando Docker a Docker Compose</h1>
+    </div>
+    <div class="blurb">
+        <p id="blurbText">Dile adiós a los comandos Docker complejos y dale la bienvenida a <span class="highlight">docker-compose up</span> ;)</p>
+        <p id="blurbText2">Pega tu comando <a href="https://docs.docker.com/engine/reference/run/" rel="noopener noreferrer" target="_blank">docker run</a> en el cuadro de abajo!</p>
+    </div>
+    <div class="input-container">
+        <input class="input-field" type="text" value="docker run -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock:ro --restart always --log-opt max-size=1g nginx">
+    </div>
+    <div class="result-container">
+        <h2 id="resultHeader">Resultado:</h2>
+        <button class="copy-button" data-clipboard-text="Copied">
+            <i class="fas fa-copy"></i>
+            <span class="copy-button-text"></span>
+        </button>
+        <pre id="yamlResult" class="result-frame"></pre>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+<script>
+    $(document).ready(function () {
+        var language = navigator.language || navigator.userLanguage;
+        if (language.startsWith("es")) {
+            $('#headerText').text("Convertir Comando Docker a Docker Compose");
+            $('#blurbText').html('Dile adiós a los comandos Docker complejos y dale la bienvenida a <span class="highlight">docker-compose up</span> ;)');
+            $('#blurbText2').html('Pega tu comando <a href="https://docs.docker.com/engine/reference/run/" rel="noopener noreferrer" target="_blank">docker run</a> en el cuadro de abajo!');
+            $('#resultHeader').text("Resultado:");
+            $('.copy-button-text').text("Copiar");
+
+        } else {
+            $('#headerText').text("Convert Docker Command to Docker Compose");
+            $('#blurbText').html('Say goodbye to sprawling docker commands and say hello to <span class="highlight">docker-compose up</span> ;)');
+            $('#blurbText2').html('Paste your <a href="https://docs.docker.com/engine/reference/run/" rel="noopener noreferrer" target="_blank">docker run</a> command in the box below!');
+            $('#resultHeader').text("Result:");
+            $('.copy-button-text').text("Copy");
+
+        }
+
+        $('.input-field').keyup(function () {
+            var command = $(this).val();
+            $.ajax({
+                url: '/',
+                type: 'POST',
+                data: {docker_command: command},
+                success: function (response) {
+                    var yamlText = response.replace(/\\n/g, '\n').replace(/&quot;/g, '\"');
+                    $('#yamlResult').text(yamlText);
+                }
+            });
+        });
+
+        // Ejecutar la conversión al cargar el documento
+        var initialCommand = $('.input-field').val();
+        $.ajax({
+            url: '/',
+            type: 'POST',
+            data: {docker_command: initialCommand},
+            success: function (response) {
+                var yamlText = response.replace(/\\n/g, '\n').replace(/&quot;/g, '\"');
+                $('#yamlResult').text(yamlText);
+            }
+        });
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Resto del código JavaScript existente
+
+        // Configurar el botón de copiar utilizando Clipboard.js
+        var clipboard = new ClipboardJS('.copy-button', {
+            target: function (trigger) {
+                return trigger.nextElementSibling;
+            }
+        });
+
+        // Mostrar una notificación después de copiar
+        clipboard.on('success', function (e) {
+            alert('¡El contenido ha sido copiado al portapapeles!');
+            e.clearSelection();
+        });
+
+        clipboard.on('error', function (e) {
+            alert('Error al copiar. Por favor, seleccione y copie manualmente.');
+        });
+    });
+</script>
+</html>
