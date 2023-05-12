@@ -13,7 +13,7 @@ def index():
         docker_compose_yaml = convert_to_docker_compose(docker_command)
         return docker_compose_yaml
 
-    return render_template('test.html')
+    return render_template('index.html')
 
 def find_options(command):
     # separa las palabras de command para obtener luego la imagen
