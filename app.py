@@ -97,4 +97,4 @@ def convert_to_docker_compose(command):
     return docker_compose_yaml
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
