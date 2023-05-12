@@ -56,7 +56,7 @@ options = {
         "--cpus": "Number of CPUs",
         "--cpuset-cpus": "CPUs in which to allow execution (0-3, 0,1)",
         "--cpuset-mems": "MEMs in which to allow execution (0-3, 0,1)",
-        "-d": "Run container in background and print container ID",
+        #"-d": "Run container in background and print container ID",
         "--detach-keys": "Override the key sequence for detaching a container",
         "--device": "Add a host device to the container",
         "--device-cgroup-rule": "Add a rule to the cgroup allowed devices list",
