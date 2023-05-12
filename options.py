@@ -71,6 +71,7 @@ options = {
         "--domainname": "Container NIS domain name",
         "--entrypoint": "Overwrite the default ENTRYPOINT of the image",
         "-e": "Set environment variables",
+        "-env": "Set environment variables",
         "--env-file": "Read in a file of environment variables",
         "--expose": "Expose a port or a range of ports",
         "--gpus": "GPU devices to add to the container ('all' to pass all GPUs)",
