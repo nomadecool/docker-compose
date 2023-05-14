@@ -15,6 +15,33 @@ The Docker command to Docker Compose converter is capable of parsing existing Do
 
 To use this converter, simply paste the Docker command into the provided text box in the web interface. The converter will analyze the command and generate the equivalent Docker Compose YAML. You can copy the result and use it in your Docker Compose project.
 
+## Installation
+
+### Building from Source
+
+To build the Docker Compose image, use the following command:
+
+```bash
+docker build -t docker-compose .
+```
+
+### Using Pre-built Image
+
+Alternatively, you can pull the pre-built image from Docker Hub using the following Docker Compose file:
+
+```yaml
+version: "3"
+
+services:
+  docker-compose:
+    image: nomadecool/docker-compose
+    container_name: docker-compose
+    restart: always
+    ports:
+      - 8088:5000
+```
+
+
 ## Contributions
 
 This project was developed as a personal contribution, but contributors are encouraged to participate and enhance the functionality of the converter. If you wish to contribute, you can submit pull requests through GitHub.
@@ -39,6 +66,31 @@ El convertidor de comandos Docker a Docker Compose es capaz de analizar los coma
 ## Uso
 
 Para utilizar este convertidor, simplemente pega el comando Docker en el cuadro de texto proporcionado en la interfaz web. El convertidor analizará el comando y generará el equivalente en YAML de Docker Compose. Puedes copiar el resultado y utilizarlo en tu proyecto de Docker Compose.
+
+## Instalación
+
+### Construcción desde el código fuente
+
+Para construir la imagen de Docker Compose, utiliza el siguiente comando:
+
+```bash
+docker build -t docker-compose .
+```
+
+### Uso de una imagen precompilada
+
+Como alternativa, puedes obtener la imagen precompilada desde Docker Hub utilizando el siguiente archivo de Docker Compose:
+```yaml
+version: "3"
+
+services:
+  docker-compose:
+    image: nomadecool/docker-compose
+    container_name: docker-compose
+    restart: always
+    ports:
+      - 8088:5000
+```
 
 ## Contribuciones
 
